@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "undefined/subscriptions/90167d67-c0d2-4e61-9486-51ba69b56b5e/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/Akillac",
+  "appService.deploySubpath": "."
+}
