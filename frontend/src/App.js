@@ -49,19 +49,17 @@ export default function App() {
     });
   }, []);
 
-  const handleUser = useCallback(() => {
+  const handleUser = useCallback(async () => {
     if (session) {
-      getProfile(session.uid).then((profile) => {
-        setProfile(profile);
-        setLoading(false);
-      });
+      const profile = await getProfile(session.uid);
+      setProfile(profile);
+      setLoading(false);
     }
   }, [session]);
 
   useEffect(() => {
     handleUser();
   }, [handleUser]);
-
 
   const getRoutes = () => {
     courses.forEach(async course => {

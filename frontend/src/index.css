@@ -17,6 +17,10 @@ button {
   align-items: center;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .login-background {
   background-image: url(./images/logo.png);
   background-size: 300px;
@@ -31,7 +35,6 @@ button {
   font-size: 48px;
   margin-top: 175px;
 }
-
 
 .login-slogan {
   font-size: 32px;
@@ -96,10 +99,6 @@ button {
   justify-content:space-between;
   background-color: #d9d9d9;
   grid-area: 1 / 1 / 2 / 3;
-}
-
-.navlist {
-  list-style-type: none;
 }
 
 .logout-button {
@@ -423,6 +422,74 @@ table {
   text-align: center;
   width: 600px;
   border: none;
+}
+
+.course-header {
+  text-align: center;
+  font-size: 32px;
+  margin: 30px;
+}
+
+.course-get-started-button {
+  height: 200px;
+  width: 200px;
+  border: none;
+  border-radius: 50%;
+  align-self: center;
+  font-size: 36px;
+  font-weight: bold;
+  background-color: #d9d9d9;
+  background-image: url(./images/logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0%;
+}
+
+.course-list > li {
+  text-align: center;
+  background-color: #d9d9d9;
+  padding: 5px;
+  border-radius: 2em;
+  width: 50%;
+  margin: 5px;
+}
+
+.course-select {
+  text-align: center;
+  background-color: #d9d9d9;
+  padding: 5px;
+  border-radius: 2em;
+  border: none;
+  width: 10.75em;
+  margin: 5px;
+  font-size: 19.5px;
+  font-weight: bold;
+}
+
+select {
+  appearance: none;
+}
+
+.course-link {
+  text-decoration: none;
+  color: black;
+}
+
+.course-edit-button {
+  height: 25px;
+  width: 70px;
+  border: none;
+  border-radius: 12.5px;
+  background-color: #d9d9d9;
+  margin: 20px;
 }
 
 .pyp-title {

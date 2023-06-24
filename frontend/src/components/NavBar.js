@@ -16,7 +16,7 @@ export default function NavBar() {
     return (
         <div className="navbar">
         <nav>
-            <ul className="navlist">
+            <ul>
                 {/* Logo that links to the home page */}
                 <li><Link to="/">
                     <img alt="logo" 
