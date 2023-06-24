@@ -42,12 +42,17 @@ A Web-based/Database for students to ask questions/browse past year papers for a
 Features to be completed by the mid of June:
 
 1. Database to store past year materials
+    This will allow the web application to easily be able to access the files and for users to download/upload files
 
-2. Web-based forum
-   Allow users to ask, answer, vote and comment on questions
-   Display all questions, answers and comments
+2. Login Page
+    Allow users to login to their account and be able to set profile picture, name and course details
 
-3. Mechanisms to collect datasets for analysis
+3. Search Screen
+    Allow users to view all the available courses and to be able to search for courses through the text box
+
+4. Home Page
+    Allow users to access all the features of the web application, and also view relevant information to them
+
 
 Features to be completed by the mid of July:
 
@@ -61,6 +66,10 @@ Features to be completed by the mid of July:
 4. Feedback system for users to sound out on how to improve the forum
 
 5. Reporting system to alert administrators about possible disruptors on the forum
+
+6. Web-based forum
+   Allow users to ask, answer, vote and comment on questions
+   Display all questions, answers and comments
 
 Tech Stack
 
@@ -92,4 +101,4 @@ npm install concurrently --save-dev
 
 
 To Start Web Application
-cd into frontend folder and run npm start
+run npm start in the root directory
