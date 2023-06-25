@@ -114,7 +114,7 @@ export function PypListProvider({ children }) {
                     console.error('Network error:', error);
                 }
             };
-            uploadFile();
+            await uploadFile();
             fetchCourses();
             setUploadPyp({
                 courseCode: "",

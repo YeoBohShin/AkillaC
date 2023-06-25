@@ -6,7 +6,7 @@ export default function WelcomeBackBanner() {
     return (
         <div className="welcomebackbanner">
             <h1>Welcome back,</h1>
-            <h1>{ profile?.name ? profile.name : "User" }</h1>
+            <h1>{ profile.name ? profile.name : "User" }</h1>
         </div>
     )
 }
