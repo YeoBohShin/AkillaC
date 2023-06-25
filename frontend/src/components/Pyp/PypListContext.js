@@ -134,7 +134,8 @@ export function PypListProvider({ children }) {
             const response = await fetch(`/getCourses`, { method: 'GET' });
             if (response.ok) {
                 const data = await response.json();
-                setCourses(data);
+                const filteredData = data.filter(course => course.courseCode.toLowerCase() !== "test");
+                setCourses(filteredData);
             }
         } catch (error) {
             console.error('Error fetching courses:', error);

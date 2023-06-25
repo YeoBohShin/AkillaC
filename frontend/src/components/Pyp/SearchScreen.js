@@ -9,7 +9,7 @@ export default function SearchScreen() {
 
     // filter the courses based on the course code searched
     const filteredCourses = courses.filter(course => 
-        course.courseCode.toLowerCase().includes(courseCode.toLowerCase()) && course.courseCode.toLowerCase() !== "test");
+        course.courseCode.toLowerCase().includes(courseCode.toLowerCase()));
         
     return (
         <div>
