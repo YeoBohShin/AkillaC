@@ -1,5 +1,5 @@
 import pytest
-from BACKEND.FileUpload import app
+import BACKEND.FileUpload
 from firebase_admin import credentials, storage
 from flask import Flask, jsonify, make_response, request
 import json
@@ -8,7 +8,18 @@ import requests
 import os
 import datetime as datetime
 
+from BACKEND.FileUpload import create_app
+import pytest
+
 @pytest.fixture
-def client():
-    with app.test_client() as client:
-        yield client
+def app():
+    app = create_app()
+    app.config.update({
+        "TESTING": True,
+    })
+    return app
+
+@pytest.fixture
+def client(app):
+    return app.test_client()
+

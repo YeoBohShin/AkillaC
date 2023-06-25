@@ -41,16 +41,16 @@ A Web-based/Database for students to ask questions/browse past year papers for a
 
 Features to be completed by the mid of June:
 
-1. Database to store past year materials
+1. Database to store past year materials - Completed
     This will allow the web application to easily be able to access the files and for users to download/upload files
 
-2. Login Page
+2. Login Page - Completed
     Allow users to login to their account and be able to set profile picture, name and course details
 
-3. Search Screen
+3. Search Screen - Completed
     Allow users to view all the available courses and to be able to search for courses through the text box
 
-4. Home Page
+4. Home Page - Completed
     Allow users to access all the features of the web application, and also view relevant information to them
 
 
