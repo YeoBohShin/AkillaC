@@ -94,70 +94,78 @@ ul {
 }
 
 .navbar {
-  width: 100%;
-  display: flex;
-  justify-content:space-between;
+  width: 100vw;
   background-color: #d9d9d9;
   grid-area: 1 / 1 / 2 / 3;
 }
 
-.logout-button {
-  margin: auto 20px;
-  height: 25px;
-  width: 70px;
-  border: none;
-  border-radius: 12.5px;
-  background-color: #29BDC5;
-  align-self: center;
+.navbar > ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.item {
+  order: 0;
+}
+
+.page-logo {
+  aspect-ratio: 3 / 4;
+  height: 100px;
+}
+
+.nav-header {
+  font-size: 64px;
+  margin-left: 100px;
 }
 
 .upload-logo {
-  position: absolute;
-  top: 0%;
-  right: 0%;
-  margin-right: 500px;
-  margin-top: 12px;
+  margin: auto 40px;
   height: 50px;
-  width: 50px;
   border: none;
   background-color: #d9d9d9;
   color: black;
 }
 
-.header {
-  padding: 10px;
-  position: absolute;
-  left: 200px;
-  font-size: 50px;
-}
-
-.page-logo {
-  height: 70px;
-  width: 57px;
+.search-div {
+  overflow: hidden;
 }
 
 .search-button {
-  position: absolute;
-  right: 0%;
-  top: 2.2%; 
-  margin-right: 130px;
+  position: relative;
+  right: 60px;
+  top: 12px;
   height: 40px;
   z-index: 1;
   border: none;
 }
 
 .search-bar {
-  position: absolute;
-  right: 0%;
-  top:0.75%;
-  margin-right: 110px;
   background-color: #29BDC5;
   height: 60px;
   width: 350px;
   font-size: 24px;
   text-align: center;
   border: none;
-  border-radius: 35px;
+  border-radius: 2em;
+}
+
+.logout-button {
+  margin-right: 20px;
+  height: 25px;
+  width: 70px;
+  border: none;
+  border-radius: 12.5px;
+  background-color: #29BDC5;
+  align-self: center;
 }
 
 .homepage {
