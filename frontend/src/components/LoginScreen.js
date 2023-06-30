@@ -19,7 +19,7 @@ export default function LoginScreen() {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
     } catch (error) {
       // Handle login error
-      alert(error.message);
+      alert("Invalid email or password");
       console.log(error);
     }
   };
