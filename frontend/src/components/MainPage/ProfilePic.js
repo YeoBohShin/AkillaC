@@ -24,11 +24,11 @@ export default function ProfilePic() {
     }, [profile]);
 
     return (
-        <div>
-        <img src={profilePic} alt="profile" className="profile-image"/> 
-        {editMode 
-        ? <ImageCrop handleImageUpload={handleImageUpload} /> 
-        : <br />}
+        <div className="profile-pic">
+            <img src={profilePic} alt="profile" className="profile-image"/> 
+            {editMode 
+            ? <ImageCrop handleImageUpload={handleImageUpload} /> 
+            : <br />} 
         </div>
     );
 }
