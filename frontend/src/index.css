@@ -474,8 +474,8 @@ table {
 
 .profilescreen {
   display: grid;
-  height: 100vh;
-  grid-template-columns: 2fr 5fr;
+  height: 86vh;
+  grid-template-columns: 1fr;
   grid-template-rows: 0.75fr 2fr 5fr;
   text-align: center;
 }
@@ -689,11 +689,17 @@ select {
     grid-template-rows: 0.75fr 2fr 5fr;
   }
 
+  
 }
 
-@media all and (min-width: 1099px) {
+@media all and (min-width: 1123px) {
   .nav-header {
     display: block;
+  }
+  
+  .profilescreen {
+    grid-template-columns: 2fr 5fr;
+    grid-template-rows: 0.75fr 2fr 5fr;
   }
 
 }
