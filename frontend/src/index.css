@@ -127,6 +127,7 @@ ul {
 .nav-header {
   font-size: 64px;
   margin-left: 50px;
+  z-index: 1;
 }
 
 .upload-logo {
@@ -669,7 +670,7 @@ select {
 }
 
 
-@media all and (min-width: 768px) {
+@media all and (min-width: 805px) {
   .nav-header {
     display: none;
   }
