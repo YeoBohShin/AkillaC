@@ -19,6 +19,7 @@ export default function LoginScreen() {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
     } catch (error) {
       // Handle login error
+      alert(error.message);
       console.log(error);
     }
   };
@@ -34,6 +35,7 @@ export default function LoginScreen() {
       }
     } catch (error) {
       // Handle creation error
+      alert(error.message);
       console.log(error);
     }
   };
