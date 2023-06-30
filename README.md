@@ -39,66 +39,57 @@ Administrators can issue warnings and ban users who are reported by others.
 
 A Web-based/Database for students to ask questions/browse past year papers for all modules in NUS.
 
-Features to be completed by the mid of June:
+<ins>Must-have Features</ins>
 
-1. Database to store past year materials - Completed
-    This will allow the web application to easily be able to access the files and for users to download/upload files
+1. Database to store past year materials: This will allow the web application to easily be able to access the files and for users to download/upload files (Done)
+2. Login Page: Authentication allowing users to login to their account and be able to set profile picture, name and course details (Done)
+3. Search Screen: Allow users to view all the available courses and to be able to search for courses through the text box (Done)
+4. Upload Screen: Allow users to share and upload past year papers that are not on the web yet easing the process of finding a paper (Done)
+5. Home Page Allow users to access all the features of the web application, and also view relevant information to them (Left newsfeed not finished)
 
-2. Login Page - Completed
-    Allow users to login to their account and be able to set profile picture, name and course details
+<ins>Good to have Features</ins>
 
-3. Search Screen - Completed
-    Allow users to view all the available courses and to be able to search for courses through the text box
+1. Web-based forum Allow users to ask, answer, vote and comment on questions. Display all questions, answers and comments
+2. List of courses that users can favourite so that they can quick search to those courses (Done)
+3. Newsfeed to notify if someone replied/liked/disliked a question or answer
+4. Feedback system to allow users to voice any opinions to improve the web application
 
-4. Home Page - Completed
-    Allow users to access all the features of the web application, and also view relevant information to them
-
-
-Features to be completed by the mid of July:
-
-1. Gamification system
-   Reward users with points for good questions and answers
-
-2. Achievement system
-   Give users some form of recognition
-3. Providing recommendations with machine learning
-
-4. Feedback system for users to sound out on how to improve the forum
-
-5. Reporting system to alert administrators about possible disruptors on the forum
-
-6. Web-based forum
-   Allow users to ask, answer, vote and comment on questions
-   Display all questions, answers and comments
-
-Tech Stack
+<ins>Tech Stack<ins>
 
 1. HTML/CSS/Javascript/React
 2. Python/Flask/Firebase
 
-Development plan
+<ins>Software Engineering</ins>
 
-3rd week of May: Finalized pitch for Orbital Lift-off, Pick up necessary technologies - HTML, CSS, Javascript, Python, SQL
+1. Dynamic Routing when uploaded new paper
+2. Reusable components
 
+<ins>Development plan</ins>
+
+3rd week of May: Finalised pitch for Orbital Lift-off, Pick up necessary technologies - HTML, CSS, Javascript, Python, SQL
 4th week of May: Created Mockup, and Proof of concept
+1st week of June: Create navigation to specific past year papers
+2nd week of June: Create Profile for each user
+3rd week of June: Run some testing and implement forum component
 
-Set-up instruction
+<ins>Set-up instruction</ins>
 
-BACKEND
+<ins>BACKEND</ins>
+BACKEND:
 install python online
+pip install firebase-admin flask CORS flask_cors
+(<b>FOR WINDOWS USER</b>)
+If you ran npm start and error message stating that python not found, type python in command prompt and download python off the microsoft store
+When installing these modules, if there is a prompt to add a certain file path to environment variable, please add if not you cannot run our web application
 
-pip install firebase-admin
-pip install flask
-pip install CORS
+1. Search environment variables in search bar
+2. Click on environment variables (bottom right)
+3. Double click on PATH
+4. Add the file path that the terminal prompt to add
 
-Alternatively, you could cd into BACKEND folder and run source venv/bin/activate 
-
-FRONTEND
+FRONTEND:
 install node.js online
 check using node -v and npm -v
-npm install react
+npm install create-react-app
 npm install concurrently --save-dev
-
-
-To Start Web Application
-run npm start in the root directory
+To Start Web Application run npm start in the root directory
