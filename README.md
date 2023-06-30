@@ -66,20 +66,20 @@ A Web-based/Database for students to ask questions/browse past year papers for a
 
 <ins>Development plan</ins>
 
-3rd week of May: Finalised pitch for Orbital Lift-off, Pick up necessary technologies - HTML, CSS, Javascript, Python, SQL
-4th week of May: Created Mockup, and Proof of concept
-1st week of June: Create navigation to specific past year papers
-2nd week of June: Create Profile for each user
+3rd week of May: Finalised pitch for Orbital Lift-off, Pick up necessary technologies - HTML, CSS, Javascript, Python, SQL  
+4th week of May: Created Mockup, and Proof of concept  
+1st week of June: Create navigation to specific past year papers  
+2nd week of June: Create Profile for each user  
 3rd week of June: Run some testing and implement forum component
 
 <ins>Set-up instruction</ins>
 
 <ins>BACKEND</ins>
 BACKEND:
-install python online
-pip install firebase-admin flask CORS flask_cors
-(<b>FOR WINDOWS USER</b>)
-If you ran npm start and error message stating that python not found, type python in command prompt and download python off the microsoft store
+install python online  
+pip install firebase-admin flask CORS flask_cors  
+(<b>FOR WINDOWS USER</b>)  
+If you ran npm start and error message stating that python not found, type python in command prompt and download python off the microsoft store  
 When installing these modules, if there is a prompt to add a certain file path to environment variable, please add if not you cannot run our web application
 
 1. Search environment variables in search bar
@@ -88,8 +88,8 @@ When installing these modules, if there is a prompt to add a certain file path t
 4. Add the file path that the terminal prompt to add
 
 FRONTEND:
-install node.js online
-check using node -v and npm -v
-npm install create-react-app
-npm install concurrently --save-dev
+install node.js online  
+check using node -v and npm -v  
+npm install create-react-app  
+npm install concurrently --save-dev  
 To Start Web Application run npm start in the root directory
