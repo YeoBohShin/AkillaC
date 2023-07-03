@@ -268,6 +268,20 @@ def create_app():
       threads_list.append(thread_dict)
     return jsonify(threads_list)
      
+  @app.route('/get_replies', methods=['GET', 'POST'])
+  def get_replies():
+    courseCode = request.args.get('courseCode')
+    parent_id = request.args.get('parentID')
+    replies_collection = db.collection('Forum').document(courseCode).collection('Threads').document(parent_id).collection('Replies')
+    replies = replies_collection.stream()
+    replies_list = []
+    for reply in replies:
+      reply_dict = reply.to_dict()
+      reply_dict['replyID'] = reply.id
+      replies_list.append(reply_dict)
+    return jsonify(replies_list)
+
+
 
   return app
 
