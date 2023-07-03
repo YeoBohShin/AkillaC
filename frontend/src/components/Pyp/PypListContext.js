@@ -115,7 +115,7 @@ export function PypListProvider({ children }) {
                 }
             };
             await uploadFile();
-            fetchCourses();
+            await fetchCourses();
             setUploadPyp({
                 courseCode: "",
                 pypYear1: "",

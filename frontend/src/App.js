@@ -61,8 +61,8 @@ export default function App() {
     handleUser();
   }, [handleUser]);
 
-  const getRoutes = () => {
-    courses.forEach(async course => {
+  const getRoutes = useCallback(async () => {
+    await courses.forEach(async course => {
       route.push({
         path: `/search/${course.courseCode}`,
         element: <PypList courseCode={course.courseCode} />
@@ -77,13 +77,15 @@ export default function App() {
         });
       });
     });
-  };
+    setRoutes(route);
+    // eslint-disable-next-line 
+  }, [courses, fetchPypNames]);
+
 
   useEffect(() => {
     getRoutes();
-    setRoutes(route);
     // eslint-disable-next-line
-  }, [courses, fetchPypNames]);
+  }, [getRoutes]);
 
   return (
     <div>
