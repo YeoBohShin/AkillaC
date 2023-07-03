@@ -1,10 +1,12 @@
 import firebase_admin
-from firebase_admin import credentials, storage
+from firebase_admin import credentials, storage, firestore
 from flask import Flask, jsonify, make_response, request
 import json
+from Post import Post
 from flask_cors import CORS
 import requests
-import datetime as datetime
+from datetime import datetime
+import random
 
 fb_app = None
 
@@ -23,6 +25,7 @@ def create_app():
   CORS(app, resources={r"/*": {"origins": "http://localhost:3000/"}})
   # Get a reference to the default Firebase Storage bucket
   bucket = storage.bucket(app=fb_app)
+  db = firestore.client()
 
 
 
@@ -206,12 +209,70 @@ def create_app():
       response = make_response(json.dumps(files))
 
       return response
-  
-  return app
 
   @app.route('/test', methods=['GET'])
   def pytest_test():
       return jsonify({'message': 'ok'})
+
+# ### Forum
+# author
+# ""
+# parentID
+# ""
+# threadContent
+# ""
+# threadID
+# ""
+# timestamp
+# ""
+
+  @app.route('/create_thread', methods=['GET', 'POST'])
+  def create_thread():
+    author = request.args.get('author')
+    thread_content = request.args.get('threadContent')
+    courseCode = request.args.get('courseCode')
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    parentID = None
+
+    new_doc = Post(author, thread_content, courseCode, timestamp, parentID)
+
+    threads_collection = db.collection('Forum').document(courseCode).collection('Threads')
+    result = threads_collection.add(new_doc.to_dict())
+
+    return f"Thread created with ID: {result[1].id}" # boh shin need to save this in order for it to be passed as argument
+
+  @app.route('/reply_to_thread', methods=['GET', 'POST'])
+  def reply_to_thread():
+    author = request.args.get('author')
+    parent_id = request.args.get('parentID')
+    reply_content = request.args.get('replyContent')
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    courseCode = request.args.get('courseCode')
+
+    new_doc = Post(author, reply_content, courseCode, timestamp, parent_id)
+
+    replies_collection = db.collection('Forum').document(courseCode).collection('Threads').document(parent_id).collection('Replies')
+    result = replies_collection.add(new_doc.to_dict())
+    return f"Reply created with ID: {result[1].id}"
+  
+  
+  @app.route('/get_threads', methods=['GET', 'POST'])
+  def get_threads():
+    courseCode = request.args.get('courseCode')
+    threads_collection = db.collection('Forum').document(courseCode).collection('Threads')
+    threads = threads_collection.stream()
+    threads_list = []
+    for thread in threads:
+      thread_dict = thread.to_dict()
+      thread_dict['threadID'] = thread.id
+      threads_list.append(thread_dict)
+    return jsonify(threads_list)
+     
+
+  return app
+
+  
+
 
 
 if __name__ == '__main__':
