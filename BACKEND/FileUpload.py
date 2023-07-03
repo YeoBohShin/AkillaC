@@ -5,7 +5,7 @@ import json
 from Post import Post
 from flask_cors import CORS
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 
 fb_app = None
@@ -191,7 +191,7 @@ def create_app():
       for blob in blobs:
           url = blob.generate_signed_url(
               version="v4",
-              expiration=datetime.timedelta(minutes=15),
+              expiration=timedelta(minutes=15),
               method="GET"
           )
           name = blob.name.split('/')
