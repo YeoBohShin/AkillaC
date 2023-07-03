@@ -230,13 +230,18 @@ def create_app():
   def create_thread():
     author = request.args.get('author')
     thread_content = request.args.get('threadContent')
-    courseCode = request.args.get('courseCode')
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     parentID = None
+    course = request.args.get('courseCode')
+    pyp_year = request.args.get('pypYear')
+    semester = request.args.get('semester')
+    mid_or_finals = request.args.get('midOrFinals')
+    combined_string = course + pyp_year + semester + mid_or_finals
+    combined_string = combined_string.upper()
 
-    new_doc = Post(author, thread_content, courseCode, timestamp, parentID)
+    new_doc = Post(author, thread_content, course, timestamp, parentID)
 
-    threads_collection = db.collection('Forum').document(courseCode).collection('Threads')
+    threads_collection = db.collection('Forum').document(combined_string).collection('Threads')
     result = threads_collection.add(new_doc.to_dict())
 
     return f"Thread created with ID: {result[1].id}" # boh shin need to save this in order for it to be passed as argument
@@ -247,19 +252,29 @@ def create_app():
     parent_id = request.args.get('parentID')
     reply_content = request.args.get('replyContent')
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    courseCode = request.args.get('courseCode')
+    course = request.args.get('courseCode')
+    pyp_year = request.args.get('pypYear')
+    semester = request.args.get('semester')
+    mid_or_finals = request.args.get('midOrFinals')
+    combined_string = course + pyp_year + semester + mid_or_finals
+    combined_string = combined_string.upper()
 
-    new_doc = Post(author, reply_content, courseCode, timestamp, parent_id)
+    new_doc = Post(author, reply_content, course, timestamp, parent_id)
 
-    replies_collection = db.collection('Forum').document(courseCode).collection('Threads').document(parent_id).collection('Replies')
+    replies_collection = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies')
     result = replies_collection.add(new_doc.to_dict())
     return f"Reply created with ID: {result[1].id}"
   
   
   @app.route('/get_threads', methods=['GET', 'POST'])
   def get_threads():
-    courseCode = request.args.get('courseCode')
-    threads_collection = db.collection('Forum').document(courseCode).collection('Threads')
+    course = request.args.get('courseCode')
+    pyp_year = request.args.get('pypYear')
+    semester = request.args.get('semester')
+    mid_or_finals = request.args.get('midOrFinals')
+    combined_string = course + pyp_year + semester + mid_or_finals
+    combined_string = combined_string.upper()
+    threads_collection = db.collection('Forum').document(combined_string).collection('Threads')
     threads = threads_collection.stream()
     threads_list = []
     for thread in threads:
@@ -270,9 +285,14 @@ def create_app():
      
   @app.route('/get_replies', methods=['GET', 'POST'])
   def get_replies():
-    courseCode = request.args.get('courseCode')
+    course = request.args.get('courseCode')
+    pyp_year = request.args.get('pypYear')
+    semester = request.args.get('semester')
+    mid_or_finals = request.args.get('midOrFinals')
+    combined_string = course + pyp_year + semester + mid_or_finals
+    combined_string = combined_string.upper()
     parent_id = request.args.get('parentID')
-    replies_collection = db.collection('Forum').document(courseCode).collection('Threads').document(parent_id).collection('Replies')
+    replies_collection = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies')
     replies = replies_collection.stream()
     replies_list = []
     for reply in replies:
