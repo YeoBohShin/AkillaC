@@ -114,9 +114,7 @@ export default function ImageCrop({ handleImageUpload}) {
           Cancel
         </button>
         <button
-          onClick={() => {
-            onCropDone(croppedArea);
-          }}
+          onClick={() => onCropDone(croppedArea)}
           className="profile-done-button"
           >
           Done

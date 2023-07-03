@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useCourseList } from "./PypListContext";
 import NavBar from "../NavBar";
 import LoadingScreen from "../LoadingScreen";
+import Forum from "../Forum/Forum";
 
 export default function Pyp({ pypName }) {
     const { fetchPypFiles } = useCourseList();
@@ -19,8 +20,8 @@ export default function Pyp({ pypName }) {
 
     return (
         <div>
-            {files.length === 0 ?
-            <LoadingScreen />
+            {files.length === 0 
+            ? <LoadingScreen />
             :
             <>
             <NavBar />
@@ -38,6 +39,7 @@ export default function Pyp({ pypName }) {
                 </li>
             </ul>
             </>}
+            <Forum loading={files.length} courseCode={courseCode}/>
         </div>
     );
 }

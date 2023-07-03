@@ -239,7 +239,7 @@ def create_app():
     threads_collection = db.collection('Forum').document(courseCode).collection('Threads')
     result = threads_collection.add(new_doc.to_dict())
 
-    return f"Thread created with ID: {result[1].id}" # boh shin need to save this in order for it to be passed as argument
+    return jsonify(f"Thread created with ID: {result[1].id}") # boh shin need to save this in order for it to be passed as argument
 
   @app.route('/reply_to_thread', methods=['GET', 'POST'])
   def reply_to_thread():
