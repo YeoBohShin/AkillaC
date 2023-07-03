@@ -24,8 +24,8 @@ export default function ProfileScreen() {
     
     return (
         <EditContext.Provider value={editMode}>
+            <NavBar />
             <div className="profilescreen">
-                <NavBar />
                 <ProfilePic />
                 <ProfileInfo />
                 <button onClick={handleEdit} className="edit-button">{editMode? "Done" : "Edit Profile"}</button>

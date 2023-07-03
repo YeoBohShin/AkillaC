@@ -7,12 +7,14 @@ import WelcomeBackBanner from "./WelcomeBackBanner";
 export default function HomeScreen() {
 
     return (
-        <div className="homepage">
+        <>
             <NavBar />
-            <WelcomeBackBanner />
-            <ProfileTab />
-            <NewsFeed />
-            <CourseTab />
-        </div>
+            <div className="homepage">
+                <WelcomeBackBanner />
+                <ProfileTab />
+                <NewsFeed />
+                <CourseTab />
+            </div>
+        </>
     );
 }

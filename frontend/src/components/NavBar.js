@@ -54,6 +54,31 @@ export default function NavBar() {
                         LOGOUT
                     </button>
                 </li>
+                <li className="bar">
+                    <span className="bars"></span>
+                    <ul>
+                        <li className="dropdown-item">
+                            <Link to="/search">
+                                <input type="text" 
+                                    value={courseCode}
+                                    onChange={handleSetCourseCode}
+                                    onClick={handleResetCourseCode}
+                                    className="drop-down-search-bar" 
+                                    placeholder="Search Courses"></input>
+                            </Link>
+                        </li>
+                        {/* Contact button that links to the contact page */}
+                        <li className="dropdown-item">
+                            <Link to="/upload" className="drop-down-upload">Upload</Link>
+                        </li>
+                        {/* Logout button that logs out the user */}
+                        <li className="dropdown-item">
+                            <button className = "drop-down-logout-button" onClick = {handleLogOutClick}>
+                                LOGOUT
+                            </button>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     );
