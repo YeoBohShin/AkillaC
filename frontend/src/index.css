@@ -658,16 +658,26 @@ select {
 }
 
 .forum {
-  height: calc(40vh - 20px);
+  height: calc(40vh - 75px);
+  background-color: #d9d9d9;
+  padding: 20px;
+  border-radius: 2em;
+  margin: 40px;
+  overflow-y: scroll;
 }
 
+.forum h2 {
+  text-align: center;
+  font-size: 32px;
+  margin: 70px;
+}
 
 .add-post-button {
   border: none;
   background-color: transparent;
   mix-blend-mode: color-burn;
   position: fixed;
-  bottom: 20px;
+  bottom: 35px;
   right: 40px;  
 }
 
@@ -717,15 +727,6 @@ select {
   border-radius: 12.5px;
   background-color: #29BDC5;
   margin: 20px;
-}
-
-.questions {
-  height: calc(45vh - 20px);
-  background-color: #d9d9d9;
-  padding: 20px;
-  border-radius: 2em;
-  margin: 40px;
-  overflow-y: scroll;
 }
 
 .questions > h1 {

@@ -24,7 +24,10 @@ export default function Forum({ loading, pypName }) {
 
     return (
         <div className="forum">
-            <Questions questions={questions} pypName={pypName} />
+            { questions.length === 0
+            ? <h2>Be the first to ask a Question!</h2> 
+            : <Questions questions={questions} pypName={pypName} />
+            }
             {loading && <button onClick={handleCreatePost} className='add-post-button'>
                 <img src={require("../../images/plus-icon.jpg")} 
                     alt="add-post-button" 
