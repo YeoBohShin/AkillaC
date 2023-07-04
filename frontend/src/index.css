@@ -661,14 +661,6 @@ select {
   height: calc(40vh - 20px);
 }
 
-.questions {
-  height: calc(45vh - 20px);
-  overflow-y: scroll;
-  background-color: #d9d9d9;
-  padding: 20px;
-  border-radius: 2em;
-  margin: 40px;
-}
 
 .add-post-button {
   border: none;
@@ -727,6 +719,15 @@ select {
   margin: 20px;
 }
 
+.questions {
+  height: calc(45vh - 20px);
+  background-color: #d9d9d9;
+  padding: 20px;
+  border-radius: 2em;
+  margin: 40px;
+  overflow-y: scroll;
+}
+
 .questions > h1 {
   margin: 15px;
   font-size: 36px;
@@ -751,15 +752,53 @@ select {
 
 .question-card > p {
   margin: 10px;
+  font-size: 16px;
+}
+
+.show-replies {
+  border: none;
+  background-color: transparent;
+  margin-right: auto;
+}
+
+.show-replies:hover {
+  color: white;
 }
 
 .question-card > h3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
   margin: 5px;
-  text-align: right;
   font-weight: 100;
   font-size: 12px;
 }
 
+.reply-button {
+  border: none;
+  background-color: transparent;
+  mix-blend-mode: color-burn;
+}
+
+.reply-icon {
+  height: 20px;
+  width: 20px;
+}
+
+.reply-card {
+  background-color: #29BDC5;
+  padding: 20px;
+  border-radius: 2em;
+  margin: 10px 40px;
+  width: calc(90% - 92px);
+}
+
+.reply-card > h3 {
+  text-align: right;
+  font-weight: 100;
+  font-size: 12px;
+}
 
 @media all and (min-width: 150px) {
   .nav-header {

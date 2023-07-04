@@ -17,21 +17,24 @@ export default function NavBar() {
         <nav className="navbar">
             <ul>
                 {/* Logo that links to the home page */}
-                <li className="logo"><Link to="/">
-                    <img alt="logo" 
-                     src={require("../images/logo.png")} 
-                     className="page-logo"/>
-                </Link>
+                <li className="logo">
+                    <Link to="/">
+                        <img alt="logo" 
+                        src={require("../images/logo.png")} 
+                        className="page-logo"/>
+                    </Link>
                     <h1 className="nav-header">
                         AkillaC
                     </h1>
                 </li>
                 {/* upload button that links to the upload page */}
-                <li className="item"><Link to="/upload">
-                    <img alt="upload"
-                    src={require("../images/upload-logo.png")}
-                    className="upload-logo"/>
-                 </Link></li>
+                <li className="item">
+                    <Link to="/upload">
+                        <img alt="upload"
+                        src={require("../images/upload-logo.png")}
+                        className="upload-logo"/>
+                    </Link>
+                </li>
                 {/* Search bar that links to the search page */}
                 <li className="item">
                     <div className="search-div">

@@ -39,7 +39,7 @@ export default function Pyp({ pypName }) {
                 </li>
             </ul>
             </>}
-            <Forum loading={files.length} courseCode={courseCode}/>
+            <Forum loading={files.length} pypName={pypName} />
         </div>
     );
 }

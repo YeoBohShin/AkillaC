@@ -239,7 +239,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, thread_content, course, timestamp, parentID)
+    new_doc = Post(author, thread_content, combined_string, timestamp, parentID)
 
     threads_collection = db.collection('Forum').document(combined_string).collection('Threads')
     result = threads_collection.add(new_doc.to_dict())
@@ -259,7 +259,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, reply_content, course, timestamp, parent_id)
+    new_doc = Post(author, reply_content, combined_string, timestamp, parent_id)
 
     replies_collection = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies')
     result = replies_collection.add(new_doc.to_dict())
