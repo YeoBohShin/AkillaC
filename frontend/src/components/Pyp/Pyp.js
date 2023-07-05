@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useCourseList } from "./PypListContext";
-import NavBar from "../NavBar";
 import LoadingScreen from "../LoadingScreen";
 import Forum from "../Forum/Forum";
 
@@ -24,7 +23,6 @@ export default function Pyp({ pypName }) {
             ? <LoadingScreen />
             :
             <>
-            <NavBar />
             <h1 className="pyp-title">
                 { courseCode } 20{ pypYear.substring(0, 2) }/20{pypYear.substring(2, 4)} { semester.substring(0, 3) } { semester.substring(3, 4)} { midOrFinals }
             </h1>

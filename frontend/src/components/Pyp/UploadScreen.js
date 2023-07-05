@@ -1,5 +1,4 @@
 import DropBox from "./Dropbox";
-import NavBar from "../NavBar";
 import { useUpdatePypList } from "./PypListContext";
 import { useEffect } from "react";
 
@@ -17,7 +16,6 @@ export default function UploadScreen() {
 
     return (
         <div>
-            <NavBar />
             <form className="upload-form">
                 <legend className="upload-legend">Course</legend>
                 <input type="text" 

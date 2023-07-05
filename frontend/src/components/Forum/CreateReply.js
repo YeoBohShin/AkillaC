@@ -6,11 +6,17 @@ export default function CreateReply({ handleCreateReply, id, pypName, getReplies
     const { courseCode, pypYear, semester, midOrFinals } = pypName;
     const [content, setContent] = useState("");
 
+    // sends reply content to backend
     const handleReply = async (event) => {
         event.preventDefault();
-        await fetch(`/reply_to_thread?author=${profile.name}&replyContent=${content}&parentID=${id}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'POST' });
-        handleCreateReply();
-        getReplies();
+        try {
+            await fetch(`/reply_to_thread?author=${profile.name}&replyContent=${content}&parentID=${id}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'POST' });
+            handleCreateReply();
+            getReplies();
+        } catch (error) {
+            console.log(error);
+            alert("Error replying Question");
+        }
     }
 
     return (

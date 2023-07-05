@@ -1,6 +1,5 @@
 import { useState, useContext, createContext } from "react";
 import { useUser } from "../../App";
-import NavBar from "../NavBar";
 import ProfilePic from "./ProfilePic";
 import ProfileInfo from "./ProfileInfo";
 
@@ -24,7 +23,6 @@ export default function ProfileScreen() {
     
     return (
         <EditContext.Provider value={editMode}>
-            <NavBar />
             <div className="profilescreen">
                 <ProfilePic />
                 <ProfileInfo />

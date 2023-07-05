@@ -1,6 +1,5 @@
 import { useCourseList } from "./PypListContext";
 import { useEffect, useState } from "react";
-import NavBar from "../NavBar";
 import PypCard from "./PypCard";
 import LoadingScreen from "../LoadingScreen";
 
@@ -8,18 +7,15 @@ export default function PypList({ courseCode }) {
     const { fetchPypNames } = useCourseList();
     const [pyps, setPyps] = useState([]);
 
-    // fetch the PYPs for the course code
     useEffect(() => {
         fetchPypNames(courseCode, setPyps);
     }, [courseCode, fetchPypNames]);
 
     return (
-        <div>
-        {pyps.length === 0 ?
-        <LoadingScreen />
-        :
         <>
-        <NavBar />
+        {pyps.length === 0 
+        ? <LoadingScreen />
+        :
         <div className="list">
             <h1>{ courseCode }</h1>
             <table>
@@ -38,9 +34,7 @@ export default function PypList({ courseCode }) {
                     })}
                 </tbody>
             </table>
-            </div>
+        </div>}
         </>
-        }
-        </div>
     );
 }
