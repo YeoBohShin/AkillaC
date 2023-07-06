@@ -5,6 +5,7 @@ class Post:
         self.course_code = course_code
         self.timestamp = timestamp
         self.parent_id = parent_id
+        self.likes = 0
 
     @staticmethod
     def from_dict(source):
@@ -22,7 +23,8 @@ class Post:
             'threadContent': self.thread_content,
             'courseCode': self.course_code,
             'timestamp': self.timestamp,
-            'parentID': self.parent_id
+            'parentID': self.parent_id,
+            'likes' : self.likes
         }
 
         return dest
@@ -32,4 +34,4 @@ class Post:
           thread_content={self.thread_content}, \
             course_code={self.course_code}, \
               timestamp={self.timestamp}, \
-                parent_id={self.parent_id})"
+                parent_id={self.parent_id}, likes={self.likes}"

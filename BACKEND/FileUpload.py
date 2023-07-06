@@ -107,8 +107,7 @@ def create_app():
   def get_Courses():
       # Get a reference to the default Firebase Cloud Storage bucket
       bucket = storage.bucket()
-      
-      print(bucket.name)  # Print the bucket name for debugging
+    
 
       courses = []
       # blobs = bucket.list_blobs(prefix='Modules/')
@@ -119,13 +118,9 @@ def create_app():
           course = {}
           name = blob.name.split('/')
           if name[0] == 'Modules' and name[1] != "" and name[1] not in dict:
-            print(name[1])
             dict[name[1]] = 1
             course['courseCode'] = name[1]
             courses.append(course)
-      
-      print(dict)
-      print(courses)
 
       response = make_response(json.dumps(courses))
       return response
@@ -300,6 +295,58 @@ def create_app():
       reply_dict['replyID'] = reply.id
       replies_list.append(reply_dict)
     return jsonify(replies_list)
+  
+  @app.route('/like', methods=['GET', 'POST'])
+  def like():
+    course = request.args.get('courseCode')
+    pyp_year = request.args.get('pypYear')
+    semester = request.args.get('semester')
+    mid_or_finals = request.args.get('midOrFinals')
+    post_id = request.args.get('id')
+    combined_string = course + pyp_year + semester + mid_or_finals
+    combined_string = combined_string.upper()
+    parent_id = request.args.get('parentID')
+
+    if parent_id is not None:
+        post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies').document(post_id)
+    else:
+        post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(post_id)
+    post = post_ref.get()
+    if post.exists:
+      post_dict = post.to_dict()
+      new_likes = post_dict['likes'] + 1
+      post_ref.update({'likes': new_likes})
+      return {'likes': new_likes}
+    else:
+       return 'Post does not exist'
+  
+  @app.route('/dislike', methods=['GET', 'POST'])
+  def dislike():
+    course = request.args.get('courseCode')
+    pyp_year = request.args.get('pypYear')
+    semester = request.args.get('semester')
+    mid_or_finals = request.args.get('midOrFinals')
+    post_id = request.args.get('id')
+    combined_string = course + pyp_year + semester + mid_or_finals
+    combined_string = combined_string.upper()
+    parent_id = request.args.get('parentID')
+
+    if parent_id is not None:
+        post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies').document(post_id)
+    else:
+        post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(post_id)
+    post = post_ref.get()
+    if post.exists:
+      post_dict = post.to_dict()
+      new_likes = post_dict['likes'] - 1
+      post_ref.update({'likes': new_likes})
+      return {'likes': new_likes}
+    else:
+       return 'Post does not exist'
+      
+     
+  
+
 
 
 
