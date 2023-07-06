@@ -1,5 +1,4 @@
 import EmptyList from "./EmptyList";
-import NavBar from "../NavBar";
 import CourseList from "./CourseList";
 import { useCourseList, useFilteredCourseCode } from "./PypListContext";
 
@@ -13,7 +12,6 @@ export default function SearchScreen() {
         
     return (
         <div>
-            <NavBar />
             {filteredCourses.length > 0 
             ? <CourseList courses={filteredCourses} /> 
             : <EmptyList />}

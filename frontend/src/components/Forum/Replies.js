@@ -1,5 +1,4 @@
 export default function Replies({ replies }) {
-
     return (
         <div className="replies">
             {replies.map((reply, index) => (

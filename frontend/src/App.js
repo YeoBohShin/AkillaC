@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, getProfile } from "./firebase"; // Import auth from firebase.js
 import { useCourseList } from "./components/Pyp/PypListContext";
+import { useUpdatePypList } from "./components/Pyp/PypListContext";
 import LoginScreen from "./components/LoginScreen";
 import HomeScreen from "./components/MainPage/HomeScreen";
 import UploadScreen from "./components/Pyp/UploadScreen";
@@ -11,6 +12,8 @@ import ProfileScreen from "./components/MainPage/ProfileScreen";
 import PypList from "./components/Pyp/PypList";
 import Pyp from "./components/Pyp/Pyp";
 import LoadingScreen from "./components/LoadingScreen";
+import NavBar from "./components/NavBar";
+import PageNotFound from "./components/PageNotFound";
 
 const UserContext = createContext();
 
@@ -36,8 +39,13 @@ export default function App() {
       path: "/profile",
       element: <ProfileScreen />,
     },
+    {
+      path: "*",
+      element: <PageNotFound />,
+    }
   ];
   const { courses, fetchPypNames } = useCourseList();
+  const { handleSetPyps } = useUpdatePypList();
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState(null);
   const [routes, setRoutes] = useState(route);
@@ -61,8 +69,8 @@ export default function App() {
     handleUser();
   }, [handleUser]);
 
-  const getRoutes = useCallback(async () => {
-    await courses.forEach(async course => {
+  const getRoutes = useCallback(() => {
+    courses.forEach(async course => {
       route.push({
         path: `/search/${course.courseCode}`,
         element: <PypList courseCode={course.courseCode} />
@@ -79,7 +87,7 @@ export default function App() {
     });
     setRoutes(route);
     // eslint-disable-next-line 
-  }, [courses, fetchPypNames]);
+  }, [courses, handleSetPyps]);
 
 
   useEffect(() => {
@@ -93,13 +101,14 @@ export default function App() {
         loading ? (
           <LoadingScreen />
         ) : (
-        <UserContext.Provider value={{profile, handleUser}}>
-          <Routes>
-            {routes.map(({ path, element }) => (
-              <Route key={path} path={path} element={element} />
-            ))}
-          </Routes>
-        </UserContext.Provider>
+          <UserContext.Provider value={{profile, handleUser}}>
+            <NavBar />
+            <Routes>
+              {routes.map(({ path, element }) => (
+                <Route key={path} path={path} element={element} />
+              ))}
+            </Routes>
+          </UserContext.Provider>
       )) : (
         <LoginScreen />
       )}

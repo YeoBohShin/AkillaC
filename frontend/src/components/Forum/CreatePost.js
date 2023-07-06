@@ -6,11 +6,17 @@ export default function CreatePost({ handleCreatePost, pypName, getQuestions }) 
     const { courseCode, pypYear, semester, midOrFinals } = pypName;
     const [content, setContent] = useState('');
 
+    // sends post content to backend
     const handlePost = async (event) => {
         event.preventDefault();
-        await fetch(`/create_thread?author=${profile.name}&threadContent=${content}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: "GET" });
-        handleCreatePost();
-        getQuestions();
+        try {
+            await fetch(`/create_thread?author=${profile.name}&threadContent=${content}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: "GET" });
+            handleCreatePost();
+            getQuestions();
+        } catch (error) {
+            console.log(error);
+            alert("Error creating post");
+        }
     }
     
     return (

@@ -8,14 +8,17 @@ export default function QuestionCard({ question, pypName }) {
     const [replies, setReplies] = useState([]);
     const [showReplies, setShowReplies] = useState(false);
 
+    // handle pop-up for creating reply
     const handleCreateReply = () => {
         setShowCreateReply(prev => !prev);
     }
 
+    // handle pop-up for showing replies
     const handleShowReplies = () => {
         setShowReplies(prev => !prev);
     }
 
+    // fetches replies from backend
     const getReplies = useCallback(async () => {
         const response = await fetch(`/get_replies?parentID=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
         const data = await response.json();
