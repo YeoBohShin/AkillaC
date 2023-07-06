@@ -306,7 +306,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
     parent_id = request.args.get('parentID')
-    if parent_id is "null":
+    if parent_id == "null":
         post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(post_id)
     else:
         post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies').document(post_id)
@@ -329,7 +329,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
     parent_id = request.args.get('parentID')
-    if parent_id is "null":
+    if parent_id == "null":
         post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(post_id)
     else:
         post_ref = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies').document(post_id)
