@@ -234,7 +234,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, thread_content, combined_string, timestamp, parentID)
+    new_doc = Post(author, thread_content, combined_string, timestamp, parentID, [])
 
     threads_collection = db.collection('Forum').document(combined_string).collection('Threads')
     result = threads_collection.add(new_doc.to_dict())
@@ -254,7 +254,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, reply_content, combined_string, timestamp, parent_id)
+    new_doc = Post(author, reply_content, combined_string, timestamp, parent_id, [])
 
     replies_collection = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies')
     result = replies_collection.add(new_doc.to_dict())
@@ -303,6 +303,7 @@ def create_app():
     semester = request.args.get('semester')
     mid_or_finals = request.args.get('midOrFinals')
     post_id = request.args.get('id')
+    user_id = request.args.get('userID')
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
     parent_id = request.args.get('parentID')
@@ -313,7 +314,8 @@ def create_app():
     post = post_ref.get()
     if post.exists:
       post_dict = post.to_dict()
-      new_likes = post_dict['likes'] + 1
+      new_likes = post_dict['likes']
+      new_likes.append(user_id)
       post_ref.update({'likes': new_likes})
       return {'likes': new_likes}
     else:
@@ -326,6 +328,7 @@ def create_app():
     semester = request.args.get('semester')
     mid_or_finals = request.args.get('midOrFinals')
     post_id = request.args.get('id')
+    user_id = request.args.get('userID')
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
     parent_id = request.args.get('parentID')
@@ -336,8 +339,10 @@ def create_app():
     post = post_ref.get()
     if post.exists:
       post_dict = post.to_dict()
-      new_likes = post_dict['likes'] - 1
+      new_likes = post_dict['likes']
+      new_likes.remove(user_id)
       post_ref.update({'likes': new_likes})
+      return {'likes': new_likes}
       return {'likes': new_likes}
     else:
        return 'Post does not exist'

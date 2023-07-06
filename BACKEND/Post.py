@@ -1,11 +1,11 @@
 class Post:
-    def __init__(self, author, thread_content, course_code, timestamp, parent_id):
+    def __init__(self, author, thread_content, course_code, timestamp, parent_id, likes):
         self.author = author
         self.thread_content = thread_content
         self.course_code = course_code
         self.timestamp = timestamp
         self.parent_id = parent_id
-        self.likes = 0
+        self.likes = likes
 
     @staticmethod
     def from_dict(source):
@@ -14,8 +14,9 @@ class Post:
         course_code = source['courseCode']
         timestamp = source['timestamp']
         parent_id = source['parentID']
+        likes = source['likes']
 
-        return Post(author, thread_content, course_code, timestamp, parent_id)
+        return Post(author, thread_content, course_code, timestamp, parent_id, likes)
 
     def to_dict(self):
         dest = {
