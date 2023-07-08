@@ -1,19 +1,31 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext, createContext } from "react";
+import { useUser } from "../../App";
+import { useQuestionsContext } from "./Forum";
 import CreateReply from "./CreateReply"
 import Replies from "./Replies";
 
+const RepliesContext = createContext();
+
+export function useRepliesContext() {
+    return useContext(RepliesContext);
+}
+
 export default function QuestionCard({ question, pypName }) {
-    const [showCreateReply, setShowCreateReply] = useState(false);
     const { courseCode, pypYear, semester, midOrFinals } = pypName;
+    const { profile } = useUser();
+    const { getQuestions } = useQuestionsContext();
     const [replies, setReplies] = useState([]);
     const [showReplies, setShowReplies] = useState(false);
+    const [showCreateReply, setShowCreateReply] = useState(false);
+    const [liked, setLiked] = useState(question.likes.includes(profile.uid));
+    const [disliked, setDisliked] = useState(question.dislikes.includes(profile.uid));
 
     // handle pop-up for creating reply
     const handleCreateReply = () => {
         setShowCreateReply(prev => !prev);
     }
 
-    // handle pop-up for showing replies
+    // handle show replies
     const handleShowReplies = () => {
         setShowReplies(prev => !prev);
     }
@@ -30,15 +42,82 @@ export default function QuestionCard({ question, pypName }) {
         getReplies();
     }, [getReplies]);
 
+    const handleLike = async () => {
+        if (disliked) {
+            const response = await fetch(`/dislike?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
+            if (response.status === 200) {
+                setDisliked(prev => !prev);
+            }
+        }
+
+        const response = await fetch(`/like?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
+        if (response.status === 200) {
+            getQuestions();
+            setLiked(prev => !prev);
+        }
+    }
+
+    useEffect(() => {
+        if (liked) {
+            const like = document.getElementById("likes" + question.threadID); 
+            like.style.mixBlendMode = "overlay";
+        } else {
+            const like = document.getElementById("likes" + question.threadID);
+            like.style.mixBlendMode = "color-burn";
+        }
+    }, [liked, question.threadID]);
+
+    const handleDislike = async () => {
+        if (liked) {
+            const response = await fetch(`/like?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
+            if (response.status === 200) {
+                setLiked(prev => !prev);
+            }
+        }
+
+        const response = await fetch(`/dislike?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
+        if (response.status === 200) {
+            getQuestions();
+            setDisliked(prev => !prev);
+        }
+    }
+
+    useEffect(() => {
+        if (disliked) {
+            const dislike = document.getElementById("dislikes" + question.threadID); 
+            dislike.style.mixBlendMode = "overlay";
+        } else {
+            const dislike = document.getElementById("dislikes" + question.threadID);
+            dislike.style.mixBlendMode = "color-burn";
+        }
+    }, [disliked, question.threadID]);
+
+    
     return (
         <>
         <div className="question-card">
             <h1>{question.author}</h1>
             <p>{question.threadContent}</p>
             <h3>
-            <button className="show-replies" onClick={handleShowReplies}>
-                {showReplies ? "Hide Replies" : "Show Replies" + ` (${replies.length})`}
-            </button>
+                <button className="show-replies" onClick={handleShowReplies}>
+                    {showReplies ? "Hide Replies" : `Show Replies (${replies.length})`}
+                </button>
+                <p>
+                    <img src={require("../../images/dislike-icon.png")} 
+                        alt="dislike-icon" 
+                        className="dislike-icon" 
+                        onClick={handleDislike} 
+                        id={"dislikes" + question.threadID} />
+                    ({question.dislikes.length})
+                </p>
+                <p>
+                    <img src={require("../../images/like-icon.png")} 
+                        alt="like-icon" 
+                        className="like-icon" 
+                        onClick={handleLike} 
+                        id={"likes" + question.threadID} />
+                    ({question.likes.length})
+                </p>
                 <button className="reply-button" onClick={handleCreateReply}>
                     <img 
                         src={require("../../images/reply-icon.png")} 
@@ -54,7 +133,10 @@ export default function QuestionCard({ question, pypName }) {
                     pypName={pypName}
                     getReplies={getReplies} />}
         </div>
-        {showReplies && <Replies replies={replies} />}
+        {showReplies && 
+            <RepliesContext.Provider value={{ getReplies }}>
+                <Replies replies={replies} pypName={pypName} />
+            </RepliesContext.Provider>}
         </>
     )
 }

@@ -1,6 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, createContext, useContext } from 'react';
 import CreatePost from './CreatePost';
 import Questions from './Questions';
+
+const QuestionsContext = createContext();
+
+export function useQuestionsContext() {
+    return useContext(QuestionsContext);
+}
 
 export default function Forum({ loading, pypName }) {
     const [showCreatePost, setShowCreatePost] = useState(false);
@@ -28,7 +34,10 @@ export default function Forum({ loading, pypName }) {
         <div className="forum">
             { questions.length === 0
             ? <h2>Be the first to ask a Question!</h2> 
-            : <Questions questions={questions} pypName={pypName} />
+            : 
+            <QuestionsContext.Provider value={{ getQuestions }}>
+                <Questions questions={questions} pypName={pypName} />
+            </QuestionsContext.Provider>
             }
             {loading && 
             <button onClick={handleCreatePost} className='add-post-button'>

@@ -234,7 +234,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, thread_content, combined_string, timestamp, parentID, [])
+    new_doc = Post(author, thread_content, combined_string, timestamp, parentID, [], [])
 
     threads_collection = db.collection('Forum').document(combined_string).collection('Threads')
     result = threads_collection.add(new_doc.to_dict())
@@ -254,7 +254,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, reply_content, combined_string, timestamp, parent_id, [])
+    new_doc = Post(author, reply_content, combined_string, timestamp, parent_id, [], [])
 
     replies_collection = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies')
     result = replies_collection.add(new_doc.to_dict())
@@ -315,11 +315,14 @@ def create_app():
     if post.exists:
       post_dict = post.to_dict()
       new_likes = post_dict['likes']
-      new_likes.append(user_id)
+      if user_id in new_likes:
+        new_likes.remove(user_id)
+      else:
+        new_likes.append(user_id)
       post_ref.update({'likes': new_likes})
       return {'likes': new_likes}
     else:
-       return 'Post does not exist'
+       return jsonify('Post does not exist')
   
   @app.route('/dislike', methods=['GET', 'POST'])
   def dislike():
@@ -339,11 +342,13 @@ def create_app():
     post = post_ref.get()
     if post.exists:
       post_dict = post.to_dict()
-      new_likes = post_dict['likes']
-      new_likes.remove(user_id)
-      post_ref.update({'likes': new_likes})
-      return {'likes': new_likes}
-      return {'likes': new_likes}
+      new_dislikes = post_dict['dislikes']
+      if user_id in new_dislikes:
+        new_dislikes.remove(user_id)
+      else:
+        new_dislikes.append(user_id)
+      post_ref.update({'dislikes': new_dislikes})
+      return {'dislikes': new_dislikes}
     else:
        return 'Post does not exist'
       

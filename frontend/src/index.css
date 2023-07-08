@@ -685,7 +685,7 @@ select {
 }
 
 .forum {
-  height: calc(40vh - 75px);
+  height: calc(40vh - 45px);
   background-color: #d9d9d9;
   padding: 20px;
   border-radius: 2em;
@@ -696,16 +696,17 @@ select {
 .forum h2 {
   text-align: center;
   font-size: 32px;
-  margin: 70px;
+  margin-top: 70px;
 }
 
 .add-post-button {
   border: none;
   background-color: transparent;
   mix-blend-mode: color-burn;
+  margin: 10px;
   position: fixed;
-  bottom: 35px;
-  right: 40px;  
+  right: 30px;
+  bottom: 30px;
 }
 
 .add-post-icon {
@@ -803,6 +804,35 @@ select {
   font-size: 12px;
 }
 
+.question-card > h3 p {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto 2px;
+}
+
+.dislike-icon {
+  height: 20px;
+  width: 20px;
+  margin: auto 2px;
+  margin-top: 6px;
+  mix-blend-mode: color-burn;
+  background-color: transparent;
+}
+
+.like-icon {
+  height: 20px;
+  width: 20px;
+  margin: auto 2px;
+  mix-blend-mode: color-burn;
+  background-color: transparent;
+}
+
+.dislike-icon, .like-icon:hover {
+  cursor: pointer;
+}
+
 .reply-button {
   border: none;
   background-color: transparent;
@@ -823,9 +853,20 @@ select {
 }
 
 .reply-card > h3 {
-  text-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
   font-weight: 100;
   font-size: 12px;
+}
+
+.reply-card > h3 p {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto 2px;
 }
 
 @media all and (min-width: 150px) {
