@@ -224,6 +224,7 @@ def create_app():
   @app.route('/create_thread', methods=['GET', 'POST'])
   def create_thread():
     author = request.args.get('author')
+    authorID = request.args.get('authorID')
     thread_content = request.args.get('threadContent')
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     parentID = None
@@ -234,7 +235,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, thread_content, combined_string, timestamp, parentID, [], [])
+    new_doc = Post(author, authorID, thread_content, combined_string, timestamp, parentID, [], [])
 
     threads_collection = db.collection('Forum').document(combined_string).collection('Threads')
     result = threads_collection.add(new_doc.to_dict())
@@ -244,6 +245,7 @@ def create_app():
   @app.route('/reply_to_thread', methods=['GET', 'POST'])
   def reply_to_thread():
     author = request.args.get('author')
+    authorID = request.args.get('authorID')
     parent_id = request.args.get('parentID')
     reply_content = request.args.get('replyContent')
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -254,7 +256,7 @@ def create_app():
     combined_string = course + pyp_year + semester + mid_or_finals
     combined_string = combined_string.upper()
 
-    new_doc = Post(author, reply_content, combined_string, timestamp, parent_id, [], [])
+    new_doc = Post(author, authorID, reply_content, combined_string, timestamp, parent_id, [], [])
 
     replies_collection = db.collection('Forum').document(combined_string).collection('Threads').document(parent_id).collection('Replies')
     result = replies_collection.add(new_doc.to_dict())

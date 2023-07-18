@@ -10,7 +10,7 @@ export default function CreatePost({ handleCreatePost, pypName, getQuestions }) 
     const handlePost = async (event) => {
         event.preventDefault();
         try {
-            await fetch(`/create_thread?author=${profile.name}&threadContent=${content}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: "GET" });
+            await fetch(`/create_thread?author=${profile.name}&authorID=${profile.uid}&threadContent=${content}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: "GET" });
             handleCreatePost();
             getQuestions();
         } catch (error) {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../../App';
 import { useRepliesContext } from './QuestionCard';
+import { getProfile, updateProfile } from '../../firebase';
 
 
 export default function ReplyCard({ reply, pypName }) {
@@ -11,10 +12,25 @@ export default function ReplyCard({ reply, pypName }) {
     const [disliked, setDisliked] = useState(reply.dislikes.includes(profile.uid));
 
     const handleLike = async () => {
+        const authorProfile = await getProfile(reply.authorID);
         if (disliked) {
             const response = await fetch(`/dislike?userID=${profile.uid}&parentID=${reply.parentID}&id=${reply.replyID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
             if (response.status === 200) {
                 setDisliked(prev => !prev);
+                const index = authorProfile.newsfeed.indexOf(
+                    {
+                        message: `${profile.name} disliked your reply from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(reply.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
             }
         }
         
@@ -22,6 +38,37 @@ export default function ReplyCard({ reply, pypName }) {
         if (response.status === 200) {
             getReplies();
             setLiked(prev => !prev);
+            if (liked) {
+                const index = authorProfile.newsfeed.indexOf(
+                    {
+                        message: `${profile.name} liked your reply from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(reply.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
+            } else {
+                await updateProfile(reply.authorID,
+                    {
+                        newsfeed: [
+                            {
+                            message: `${profile.name} liked your reply from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                            courseCode: courseCode,
+                            pypYear: pypYear,
+                            semester: semester,
+                            midOrFinals: midOrFinals
+                        },
+                        ...authorProfile.newsfeed
+                        ]
+                    }
+                );
+            }
         }
     }
 
@@ -36,10 +83,25 @@ export default function ReplyCard({ reply, pypName }) {
     }, [liked, reply.replyID]);
 
     const handleDislike = async () => {
+        const authorProfile = await getProfile(reply.authorID);
         if (liked) {
             const response = await fetch(`/like?userID=${profile.uid}&parentID=${reply.parentID}&id=${reply.replyID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
             if (response.status === 200) {
                 setLiked(prev => !prev);
+                const index = authorProfile.newsfeed.indexOf(
+                    {
+                        message: `${profile.name} liked your reply from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(reply.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
             }
         }
 
@@ -47,6 +109,38 @@ export default function ReplyCard({ reply, pypName }) {
         if (response.status === 200) {
             getReplies();
             setDisliked(prev => !prev);
+            if (disliked) {
+                const index = authorProfile.newsfeed.indexOf(
+                    {
+                        message: `${profile.name} disliked your reply from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(reply.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
+            } else {
+
+                await updateProfile(reply.authorID,
+                    {
+                        newsfeed: [
+                            {
+                                message: `${profile.name} disliked your reply from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                                courseCode: courseCode,
+                                pypYear: pypYear,
+                                semester: semester,
+                                midOrFinals: midOrFinals
+                            },
+                            ...authorProfile.newsfeed
+                        ]
+                    }
+                );
+            }
         }
     }
 

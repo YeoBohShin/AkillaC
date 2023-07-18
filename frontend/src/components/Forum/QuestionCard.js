@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useContext, createContext } from "react";
 import { useUser } from "../../App";
 import { useQuestionsContext } from "./Forum";
+import { getProfile, updateProfile } from "../../firebase";
 import CreateReply from "./CreateReply"
 import Replies from "./Replies";
 
@@ -43,17 +44,63 @@ export default function QuestionCard({ question, pypName }) {
     }, [getReplies]);
 
     const handleLike = async () => {
+        const authorProfile = await getProfile(question.authorID);
         if (disliked) {
             const response = await fetch(`/dislike?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
             if (response.status === 200) {
                 setDisliked(prev => !prev);
+                const index = authorProfile.newsfeed.indexOf(
+                    { 
+                        message: `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(question.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
             }
         }
-
+        
         const response = await fetch(`/like?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
         if (response.status === 200) {
             getQuestions();
             setLiked(prev => !prev);
+            if (liked) {
+                const index = authorProfile.newsfeed.indexOf(
+                    { 
+                        message: `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(question.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
+            } else {
+                await updateProfile(question.authorID,
+                    {
+                        newsfeed: [
+                            { 
+                                message : `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                                courseCode: courseCode,
+                                pypYear: pypYear,
+                                semester: semester,
+                                midOrFinals: midOrFinals
+                            },
+                            ...authorProfile.newsfeed
+                        ]
+                    }
+                );
+            }
         }
     }
 
@@ -68,10 +115,25 @@ export default function QuestionCard({ question, pypName }) {
     }, [liked, question.threadID]);
 
     const handleDislike = async () => {
+        const authorProfile = await getProfile(question.authorID);
         if (liked) {
             const response = await fetch(`/like?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
             if (response.status === 200) {
                 setLiked(prev => !prev);
+                const index = authorProfile.newsfeed.indexOf(
+                    { 
+                        message: `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(question.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
             }
         }
 
@@ -79,6 +141,37 @@ export default function QuestionCard({ question, pypName }) {
         if (response.status === 200) {
             getQuestions();
             setDisliked(prev => !prev);
+            if (disliked) {
+                const index = authorProfile.newsfeed.indexOf(
+                    {
+                        message: `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                        courseCode: courseCode,
+                        pypYear: pypYear,
+                        semester: semester,
+                        midOrFinals: midOrFinals
+                    });
+                authorProfile.newsfeed.splice(index, 1);
+                await updateProfile(question.authorID,
+                    {
+                        newsfeed: authorProfile.newsfeed
+                    }
+                );
+            } else {
+                await updateProfile(question.authorID,
+                    {
+                        newsfeed: [
+                            {
+                                message: `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
+                                courseCode: courseCode,
+                                pypYear: pypYear,
+                                semester: semester,
+                                midOrFinals: midOrFinals
+                            },
+                            ...authorProfile.newsfeed
+                        ]
+                    }
+                );
+            }
         }
     }
 
@@ -92,7 +185,6 @@ export default function QuestionCard({ question, pypName }) {
         }
     }, [disliked, question.threadID]);
 
-    
     return (
         <>
         <div className="question-card">
@@ -129,7 +221,8 @@ export default function QuestionCard({ question, pypName }) {
             {showCreateReply && 
                 <CreateReply 
                     handleCreateReply={handleCreateReply} 
-                    id={question.threadID} 
+                    id={question.threadID}
+                    qnsAuthorId={question.authorID} 
                     pypName={pypName}
                     getReplies={getReplies} />}
         </div>

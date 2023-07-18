@@ -31,7 +31,7 @@ export default function LoginScreen() {
       const user = await createUserWithEmailAndPassword(auth, createEmail, createPassword);
       // Create a profile for the user
       if (user) {
-        createProfile(user.user.uid, { uid: user.user.uid });
+        createProfile(user.user.uid, { uid: user.user.uid, newsfeed: [] });
       }
     } catch (error) {
       // Handle creation error
