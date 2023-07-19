@@ -11,6 +11,7 @@ export default function NavBar() {
     // Logs out the user    
     const handleLogOutClick = async () => {
         await signOut(auth);
+        window.location.href = "/";
     };
 
     return (

@@ -29,9 +29,11 @@ export default function CourseTab() {
     }
 
     useEffect(() => {
-        if (profile?.currCourses) {
+        if (profile.currCourses) {
             setCurrCourses(profile.currCourses);
-        } 
+        } else {
+            setCurrCourses(null);
+        }
     }, [profile]);
 
     return (

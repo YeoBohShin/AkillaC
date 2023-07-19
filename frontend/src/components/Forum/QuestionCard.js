@@ -49,14 +49,8 @@ export default function QuestionCard({ question, pypName }) {
             const response = await fetch(`/dislike?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
             if (response.status === 200) {
                 setDisliked(prev => !prev);
-                const index = authorProfile.newsfeed.indexOf(
-                    { 
-                        message: `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
-                        courseCode: courseCode,
-                        pypYear: pypYear,
-                        semester: semester,
-                        midOrFinals: midOrFinals
-                    });
+                const index = authorProfile.newsfeed.findIndex(
+                    newsfeed => newsfeed.message === `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`);
                 authorProfile.newsfeed.splice(index, 1);
                 await updateProfile(question.authorID,
                     {
@@ -71,14 +65,8 @@ export default function QuestionCard({ question, pypName }) {
             getQuestions();
             setLiked(prev => !prev);
             if (liked) {
-                const index = authorProfile.newsfeed.indexOf(
-                    { 
-                        message: `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
-                        courseCode: courseCode,
-                        pypYear: pypYear,
-                        semester: semester,
-                        midOrFinals: midOrFinals
-                    });
+                const index = authorProfile.newsfeed.findIndex(
+                    newsfeed => newsfeed.message === `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`);
                 authorProfile.newsfeed.splice(index, 1);
                 await updateProfile(question.authorID,
                     {
@@ -120,14 +108,8 @@ export default function QuestionCard({ question, pypName }) {
             const response = await fetch(`/like?userID=${profile.uid}&parentID=${question.parentID}&id=${question.threadID}&courseCode=${courseCode}&pypYear=${pypYear}&semester=${semester}&midOrFinals=${midOrFinals}`, { method: 'GET' });
             if (response.status === 200) {
                 setLiked(prev => !prev);
-                const index = authorProfile.newsfeed.indexOf(
-                    { 
-                        message: `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
-                        courseCode: courseCode,
-                        pypYear: pypYear,
-                        semester: semester,
-                        midOrFinals: midOrFinals
-                    });
+                const index = authorProfile.newsfeed.findIndex(
+                    newsfeed => newsfeed.message === `${profile.name} liked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`);
                 authorProfile.newsfeed.splice(index, 1);
                 await updateProfile(question.authorID,
                     {
@@ -142,14 +124,8 @@ export default function QuestionCard({ question, pypName }) {
             getQuestions();
             setDisliked(prev => !prev);
             if (disliked) {
-                const index = authorProfile.newsfeed.indexOf(
-                    {
-                        message: `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`,
-                        courseCode: courseCode,
-                        pypYear: pypYear,
-                        semester: semester,
-                        midOrFinals: midOrFinals
-                    });
+                const index = authorProfile.newsfeed.findIndex(
+                    newsfeed => newsfeed.message === `${profile.name} disliked your question from ${courseCode} ${pypYear.substring(0, 2)}/${pypYear.substring(2, 4)} ${semester} ${midOrFinals}`);
                 authorProfile.newsfeed.splice(index, 1);
                 await updateProfile(question.authorID,
                     {
