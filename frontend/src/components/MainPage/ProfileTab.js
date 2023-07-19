@@ -6,7 +6,7 @@ export default function ProfileTab() {
 
     return (
         <div className="profiletab">
-        {profile 
+        {profile.photoUrl
         ? <img src={profile?.photoUrl} alt="profile" className="profiletab-image"/>
         : <img src={require("../../images/profile-pic.jpg")} alt="profile" className="profiletab-image"/>}
         <Link to="/profile">

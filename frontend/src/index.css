@@ -364,6 +364,7 @@ ul {
   margin: 10px 40px;
   font-size: 16px;
 }
+
 .newsfeed-link {
   text-decoration: none;
   color: black;
@@ -932,7 +933,7 @@ select {
 
   .homepage {
     grid-template-columns: 5fr 2fr;
-    grid-template-rows: 0.75fr 2fr 5fr;
+    grid-template-rows: 2fr 5fr;
   }
 
 }
