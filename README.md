@@ -93,3 +93,7 @@ check using node -v and npm -v
 npm install create-react-app  
 npm install concurrently --save-dev  
 To Start Web Application run npm start in the root directory
+
+
+Tests:
+
